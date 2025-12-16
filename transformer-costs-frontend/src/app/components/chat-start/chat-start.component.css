@@ -1,0 +1,77 @@
+.chat-start {
+  padding: 10px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1c1c1f;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #f8f9fc;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.user-card:hover {
+  background-color: #e6ecf3;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-right: 12px;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #28a745;
+  border: 2px solid #fff;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d1d5db;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: #2f2f35;
+}
+
+.user-role {
+  font-size: 13px;
+  color: #7a7f87;
+}
+
+.text-muted {
+  color: #6c757d;
+}

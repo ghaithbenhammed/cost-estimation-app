@@ -1,0 +1,331 @@
+<div class="customer-container">
+  <div class="d-flex justify-content-start mb-3">
+    <button
+      class="btn btn-outline-secondary rounded"
+      (click)="goBack()"
+      title="Retour à la page précédente"
+    >
+      ← Retour
+    </button>
+  </div>
+
+  <h2 class="text-center fw-bold mb-4 text-dark">Liste des Clients</h2>
+
+  <div class="d-flex flex-wrap gap-2 justify-content-center mb-3">
+    <select
+      [(ngModel)]="searchColumn"
+      class="form-select w-auto"
+      title="Sélectionner une colonne"
+    >
+      <option value="Name">Nom</option>
+      <option value="No">Numéro</option>
+      <option value="County">Pays</option>
+      <option value="Responsibility_Center">Responsabilité</option>
+    </select>
+
+    <div class="position-relative">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (ngModelChange)="searchCustomers()"
+        placeholder="Rechercher un client"
+        class="form-control ps-5"
+        title="Champ de recherche"
+      />
+      <i
+        class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+      ></i>
+    </div>
+  </div>
+
+  <div class="table-responsive" *ngIf="showTable">
+    <table
+      class="table align-middle table-bordered border-light-subtle shadow-sm table-hover text-center rounded"
+    >
+      <thead class="table-light">
+        <tr>
+          <th class="text-center">Sélectionner</th>
+          <th>Numéro</th>
+          <th>Nom</th>
+          <th>Pays</th>
+          <th>Responsabilité</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="paginatedCustomers.length > 0">
+        <tr
+          *ngFor="let customer of paginatedCustomers"
+          [class.table-active]="selectedCustomer?.No === customer.No"
+        >
+          <td class="align-middle">
+            <label [attr.for]="'select_' + customer.No" class="visually-hidden"
+              >Sélectionner {{ customer.Name }}</label
+            >
+            <input
+              type="radio"
+              [id]="'select_' + customer.No"
+              name="customerSelection"
+              (change)="onSelectCustomer(customer)"
+              [checked]="selectedCustomer?.No === customer.No"
+              class="form-check-input"
+              title="Sélectionner {{ customer.Name }}"
+              [attr.aria-label]="'Sélectionner ' + customer.Name"
+            />
+          </td>
+          <td>{{ customer.No }}</td>
+          <td>{{ customer.Name }}</td>
+          <td>{{ customer.County }}</td>
+          <td>{{ customer.Responsibility_Center }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2">
+              <button
+                class="btn btn-sm btn-outline-primary"
+                (click)="editCustomer(customer)"
+                [attr.aria-label]="'Modifier ' + customer.Name"
+                title="Modifier"
+              >
+                <i class="fas fa-edit" aria-hidden="true"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteCustomer(customer.No)"
+                [attr.aria-label]="'Supprimer ' + customer.Name"
+                title="Supprimer"
+              >
+                <i class="fas fa-trash" aria-hidden="true"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-info"
+                (click)="viewCustomerRequests(customer.No)"
+                [attr.aria-label]="
+                  'Voir l’historique des demandes de ' + customer.Name
+                "
+                title="Historique demandes"
+              >
+                <i class="fas fa-clock" aria-hidden="true"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="isLoading" class="text-center my-4">
+      <div
+        class="spinner-border text-primary"
+        role="status"
+        aria-label="Chargement"
+      >
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <div class="text-muted mt-2">Chargement des clients...</div>
+    </div>
+    <div
+      *ngIf="!isLoading && showNoCustomerMessage"
+      class="text-center mt-3 text-muted fst-italic"
+    >
+      ❌ Aucun client trouvé.
+    </div>
+
+    <div *ngIf="noCustomerFound" class="text-center mt-3">
+      <button class="btn btn-outline-success" (click)="createNewCustomer()">
+        ➕ Ajouter un Nouveau Client
+      </button>
+    </div>
+
+    <div
+      class="d-flex justify-content-center align-items-center mt-3"
+      *ngIf="totalPages > 1"
+    >
+      <button
+        class="btn btn-sm btn-outline-secondary me-2"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1"
+      >
+        ← Précédent
+      </button>
+      <span class="fw-semibold text-dark">
+        Page {{ currentPage }} sur {{ totalPages }}
+      </span>
+      <button
+        class="btn btn-sm btn-outline-secondary ms-2"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Suivant →
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="selectedCustomer" class="card p-4 mt-4 shadow-sm">
+    <h4 class="mb-3">Informations du Client</h4>
+    <p><strong>Nom :</strong> {{ selectedCustomer.Name }}</p>
+    <p><strong>Numéro :</strong> {{ selectedCustomer.No }}</p>
+    <p>
+      <strong>Responsabilité :</strong>
+      {{ selectedCustomer.Responsibility_Center }}
+    </p>
+    <div class="d-flex justify-content-between mt-3">
+      <button class="btn btn-outline-secondary" (click)="resetSelection()">
+        ← Retour à la liste
+      </button>
+      <button class="btn btn-outline-primary" (click)="goToRequestManagement()">
+        Gérer une demande
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isCreatingNewCustomer" class="card p-4 mt-4 shadow-sm">
+    <h4 class="text-primary mb-4">
+      {{
+        selectedCustomer ? "Modifier le Client" : "Ajouter un Nouveau Client"
+      }}
+    </h4>
+
+    <form (ngSubmit)="saveNewCustomer()" #form="ngForm">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Nom</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newCustomer.Name"
+            required
+            #nameRef="ngModel"
+          />
+          <div
+            *ngIf="nameRef.invalid && nameRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="no" class="form-label">Numéro</label>
+          <input
+            id="no"
+            name="no"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newCustomer.No"
+            required
+            #noRef="ngModel"
+          />
+          <div
+            *ngIf="noRef.invalid && noRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="county" class="form-label">Pays</label>
+          <input
+            id="county"
+            name="county"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newCustomer.County"
+            required
+            #countyRef="ngModel"
+          />
+          <div
+            *ngIf="countyRef.invalid && countyRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="responsibility" class="form-label">Responsabilité</label>
+          <input
+            id="responsibility"
+            name="responsibility"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newCustomer.Responsibility_Center"
+            required
+            #responsibilityRef="ngModel"
+          />
+          <div
+            *ngIf="responsibilityRef.invalid && responsibilityRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="status" class="form-label">Statut</label>
+          <select
+            id="status"
+            name="status"
+            class="form-select"
+            [(ngModel)]="newCustomer.Customer_Status"
+            required
+            #statusRef="ngModel"
+          >
+            <option value="" disabled selected hidden>
+              -- Sélectionner --
+            </option>
+            <option value="Open">Ouvert</option>
+            <option value="Closed">Fermé</option>
+            <option value="Suspended">Suspendu</option>
+          </select>
+          <div
+            *ngIf="statusRef.invalid && statusRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="vat" class="form-label">Numéro TVA</label>
+          <input
+            id="vat"
+            name="vat"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newCustomer.VAT_Registration_No"
+            required
+            #vatRef="ngModel"
+          />
+          <div
+            *ngIf="vatRef.invalid && vatRef.touched"
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-4">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="cancelNewCustomer()"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          class="btn btn-outline-success"
+          [disabled]="form.invalid"
+        >
+          Sauvegarder
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success text-center mt-4">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="successMessage" class="text-center mt-2"></div>
+</div>

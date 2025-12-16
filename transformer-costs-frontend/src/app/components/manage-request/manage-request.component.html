@@ -1,0 +1,251 @@
+<div class="page-container mt-4">
+  <button class="back-btn mb-4" (click)="goBack()">← Retour</button>
+
+  <div class="card shadow-lg p-4">
+    <h2>Nouvelle Demande</h2>
+
+    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Customer No</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="customerNo"
+            readonly
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Customer Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="customerName"
+            readonly
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Type</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="request_type"
+            [ngClass]="{
+              'field-highlight': lastPatchedFields.includes('request_type')
+            }"
+            placeholder="Ex: Transformateur"
+          />
+          <div
+            *ngIf="
+              requestForm.get('request_type')?.invalid &&
+              requestForm.get('request_type')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Puissance</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="power"
+            [ngClass]="{
+              'field-highlight': lastPatchedFields.includes('power')
+            }"
+            placeholder="Ex: 100 KVA"
+          />
+          <div
+            *ngIf="
+              requestForm.get('power')?.invalid &&
+              requestForm.get('power')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Tension Primaire</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="primary_voltage"
+            [ngClass]="{
+              'field-highlight': lastPatchedFields.includes('primary_voltage')
+            }"
+            placeholder="Ex: 20000 V"
+          />
+          <div
+            *ngIf="
+              requestForm.get('primary_voltage')?.invalid &&
+              requestForm.get('primary_voltage')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Tension Secondaire</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="secondary_voltage"
+            [ngClass]="{
+              'field-highlight': lastPatchedFields.includes('secondary_voltage')
+            }"
+            placeholder="Ex: 400 V"
+          />
+          <div
+            *ngIf="
+              requestForm.get('secondary_voltage')?.invalid &&
+              requestForm.get('secondary_voltage')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Fréquence</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="frequency"
+            [ngClass]="{
+              'field-highlight': lastPatchedFields.includes('frequency')
+            }"
+            placeholder="Ex: 50 Hz"
+          />
+          <div
+            *ngIf="
+              requestForm.get('frequency')?.invalid &&
+              requestForm.get('frequency')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Échauffement Huile</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="oil_heating"
+            placeholder="Ex: 65°C"
+          />
+          <div
+            *ngIf="
+              requestForm.get('oil_heating')?.invalid &&
+              requestForm.get('oil_heating')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Échauffement Conducteur</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="conductor_heating"
+            placeholder="Ex: 75°C"
+          />
+          <div
+            *ngIf="
+              requestForm.get('conductor_heating')?.invalid &&
+              requestForm.get('conductor_heating')?.touched
+            "
+            class="text-danger small mt-1"
+          >
+            Ce champ est requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Description (facultative)</label>
+          <textarea
+            class="form-control"
+            formControlName="description_text"
+            rows="3"
+            placeholder="Ajouter une description ou une remarque..."
+          ></textarea>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-bold">Fichier joint</label>
+          <input
+            type="file"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept=".pdf,.jpg,.jpeg,.png"
+          />
+          <small class="text-muted"
+            >Format accepté : .pdf, .jpg, .jpeg, .png</small
+          >
+        </div>
+      </div>
+
+      <div *ngIf="isAnalysing" class="ai-analyse-bar my-3">
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+            style="width: 100%"
+          ></div>
+        </div>
+        <p class="mt-2 text-center fw-bold text-info">{{ aiLoadingStep }}</p>
+      </div>
+
+      <button
+        type="button"
+        (click)="analyserPDF()"
+        class="btn btn-success w-100 mt-3"
+      >
+        Analyser avec IA
+      </button>
+      <button
+        type="submit"
+        class="btn btn-success w-100 mt-3"
+        [disabled]="requestForm.invalid"
+      >
+        Valider la Demande
+      </button>
+    </form>
+
+    <div *ngIf="successMessage" class="alert alert-success text-center mt-3">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="suggestedTransformers.length > 0" class="mt-5">
+      <h4 class="suggestions-title mb-4">
+        🔍 Transformateurs similaires suggérés
+      </h4>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let item of suggestedTransformers">
+          <div class="card h-100 shadow-sm transform-card p-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ item }}</h5>
+            </div>
+            <div class="card-footer bg-transparent border-0"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+.page-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  max-width: 1150px;
+  margin: auto;
+  margin-top: 30px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+
+.page-title {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.filter-container {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.filter-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #34495e;
+}
+
+.filter-select {
+  margin-left: 10px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-select:hover {
+  background-color: #f0f0f0;
+}
+
+.card-container {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  padding: 10px 10px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-body p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #1e1e1e;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  background-color: #f5f5f5;
+  color: #333;
+  margin-left: 8px;
+}
+
+.badge-pending {
+  background-color: #ffe0b2;
+  color: #e65100;
+}
+
+.badge-completed {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.badge-rejected {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.badge-en-cours {
+  background-color: #ffe0b2;
+  color: #e65100;
+}
+
+.badge-emise {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.badge-validated {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+  padding: 2px 8px;
+  font-size: 10px;
+  margin-left: 6px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  gap: 12px;
+}
+
+.btn-view, .btn-delete {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-view {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.btn-view:hover {
+  background-color: #bbdefb;
+}
+
+.btn-delete {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.btn-delete:hover {
+  background-color: #ef9a9a;
+}
+
+.loading-text, .empty-message {
+  text-align: center;
+  font-size: 16px;
+  color: #7b7b7b;
+  margin-top: 30px;
+}
+
+.disabled-button {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}

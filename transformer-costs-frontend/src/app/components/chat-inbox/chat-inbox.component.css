@@ -1,0 +1,128 @@
+.chat-inbox {
+  padding: 10px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1c1c1f;
+}
+
+.inbox-container {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.inbox-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  background-color: #f8f9fc;
+  transition: background-color 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  position: relative;
+}
+
+.conversation-item:hover {
+  background-color: #e6ecf3;
+}
+
+.conversation-item.selected {
+  background-color: #d0e9f5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.avatar-wrapper {
+  position: relative;
+  margin-right: 12px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d1d5db;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.conversation-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 15px;
+  color: #2f2f35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.last-message {
+  font-size: 13px;
+  color: #7a7f87;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 8px;
+}
+
+.time {
+  font-size: 11px;
+  color: #999;
+}
+
+.unread-badge {
+  margin-top: 4px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #aaa;
+  margin-left: 10px;
+  visibility: hidden;
+  transition: color 0.3s;
+}
+
+.conversation-item:hover .delete-btn {
+  visibility: visible;
+}
+
+.delete-btn:hover {
+  color: #f44336;
+}

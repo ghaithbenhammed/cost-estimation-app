@@ -1,0 +1,172 @@
+/* Global Styles */
+body {
+    background-color: #E0E2E8;  /* Fond clair */
+    color: #394054;  /* Texte principal */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Titres */
+  h1, h2, h3, h4 {
+    color: #1C1C1F;  /* Titres en couleur sombre */
+  }
+  
+  /* Liens */
+  a {
+    color: #5DA5B3;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #394054;
+    text-decoration: underline;
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #5DA5B3;  /* Couleur de fond des boutons */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #394054;  /* Changer la couleur au survol */
+  }
+  
+  /* Cards */
+  .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .card-header {
+    background-color: #5DA5B3;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .card-body {
+    background-color: #F9F9F9;
+    color: #394054;
+  }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #B0C0D4;  /* Bordures légères */
+  }
+  
+  th {
+    background-color: #B0C0D4;
+    color: #1C1C1F;  /* Texte des en-têtes en foncé */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #E0E2E8;  /* Légère variation de fond pour les lignes paires */
+  }
+  
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Form Inputs */
+  input, select, textarea {
+    padding: 10px;
+    border: 1px solid #B0C0D4;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #394054;
+    margin-bottom: 15px;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    outline-color: #5DA5B3;
+  }
+/* Un peu d'espacement autour de tout le contenu */
+.container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+  }
+  
+  /* Design général pour les titres */
+  h2, h3 {
+    color: #394054;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 15px;
+  }
+   /* Thème clair (par défaut) */
+body {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+/* Thème sombre */
+body.dark-theme {
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Appliquer fond sombre à la toolbar */
+body.dark-theme .mat-toolbar {
+  background-color: #1f1f1f !important;
+  color: white !important;
+}
+
+/* Appliquer fond sombre aux cartes Angular Material */
+body.dark-theme .mat-card {
+  background-color: #1e1e1e !important;
+  color: white !important;
+}
+
+/* Appliquer fond sombre aux boutons */
+body.dark-theme .mat-button,
+body.dark-theme .mat-icon-button {
+  color: white !important;
+}
+
+/* Changer icônes en blanc */
+body.dark-theme .mat-icon {
+  color: white !important;
+}
+
+/* Champs de formulaire */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background-color: #2c2c2c;
+  color: white;
+  border: 1px solid #444;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

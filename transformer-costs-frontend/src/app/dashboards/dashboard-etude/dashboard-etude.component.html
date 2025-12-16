@@ -1,0 +1,94 @@
+<div class="dashboard-container p-6">
+  <h2 class="dashboard-title text-2xl font-bold text-sky-900 mb-6 flex items-center gap-2">
+    <span>📊</span> Tableau de bord - Étude
+  </h2>
+
+  <!-- ✅ Statistiques -->
+  <div class="stat-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all">
+      <h3 class="text-sm font-medium text-gray-500">📄 Total Demandes</h3>
+      <p class="text-4xl font-bold text-gray-900 mt-2">{{ nombreDemandes }}</p>
+    </div>
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all">
+      <h3 class="text-sm font-medium text-gray-500">✅ Taux de Validation</h3>
+      <p class="text-4xl font-bold text-green-600 mt-2">{{ tauxValidation }}%</p>
+      <div *ngIf="variationTauxValidation !== null" class="trend-indicator" [ngClass]="{
+        'trend-up': variationTauxValidation > 0,
+        'trend-down': variationTauxValidation < 0
+      }">
+        
+      </div>
+    </div>
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all">
+      <h3 class="text-sm font-medium text-gray-500">⏱️ Délai Moyen de Validation</h3>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ tempsMoyenValidation }} jours</p>
+    </div>
+  </div>
+
+  <!-- ✅ Graphiques -->
+  <div class="charts-grid grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div *ngIf="chartsReady" class="chart-card bg-white shadow-lg rounded-2xl p-6">
+      <h4 class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2">
+        📈 Demandes par Jour
+      </h4>
+      <canvas baseChart
+              #barChart
+              [data]="chartData"
+              [options]="chartOptions"
+              chartType="bar"
+              aria-label="Graphique des demandes par jour">
+      </canvas>
+    </div>
+
+    <div *ngIf="isPieDataReady()"
+    class="chart-card bg-white shadow-lg rounded-2xl p-6 pie-chart-container"
+    #pieChartContainer>
+     <h4 class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2">
+       🧩 Répartition des Statuts
+      </h4>
+      
+      <canvas baseChart
+              #pieChart
+              [data]="pieChartData"
+              [options]="pieChartOptions"
+              [type]="pieChartType"
+              aria-label="Diagramme de répartition des statuts">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- ✅ Dernières demandes -->
+  <div class="latest-requests bg-white shadow-lg rounded-2xl p-6">
+    <h4 class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2">
+      📋 5 Dernières Demandes
+    </h4>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-600">
+          <tr>
+            <th class="p-3">Client</th>
+            <th class="p-3">Type</th>
+            <th class="p-3">Statut</th>
+            <th class="p-3">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let demande of dernieresDemandes" class="border-b hover:bg-gray-50">
+            <td class="p-3 font-medium text-gray-800">{{ demande.customer_name }}</td>
+            <td class="p-3 text-gray-600">{{ demande.request_type }}</td>
+            <td class="p-3">
+              <span class="status" [ngClass]="demande.status?.toLowerCase().trim()">
+  {{ demande.status === 'pending' ? 'En attente' :
+     demande.status === 'completed' ? 'Terminée' :
+     demande.status === 'rejected' ? 'Rejetée' :
+     demande.status }}
+</span>
+
+            </td>
+            <td class="p-3 text-gray-600">{{ demande.created_at | date:'shortDate' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> 

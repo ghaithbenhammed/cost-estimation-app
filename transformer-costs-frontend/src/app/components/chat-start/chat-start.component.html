@@ -1,0 +1,30 @@
+<div class="chat-start">
+  <h2 class="section-title">Démarrer une nouvelle conversation</h2>
+
+  <div class="user-list">
+    <div
+      class="user-card"
+      *ngFor="let user of users"
+      (click)="selectUser(user)"
+      title="Cliquer pour démarrer"
+    >
+      <div class="avatar-wrapper">
+        <img
+          [src]="user.profile_picture || 'assets/default-avatar.png'"
+          alt="profil"
+          class="avatar"
+        />
+        <span *ngIf="user.is_online" class="status-dot" title="En ligne"></span>
+      </div>
+
+      <div class="user-info">
+        <div class="user-name">
+          {{ user.full_name || user.first_name + " " + user.last_name }}
+        </div>
+        <div class="user-role text-muted">
+          {{ user.role }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

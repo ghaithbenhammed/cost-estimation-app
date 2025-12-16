@@ -1,0 +1,49 @@
+<div *ngIf="user; else loading" class="profile-wrapper">
+  <div class="profile-panel">
+    <div class="profile-header">
+      <img [src]="user.profile_picture || 'assets/default-avatar.png'" class="avatar" alt="Photo de profil" />
+
+      <label for="upload" class="upload-btn">
+        📷 Modifier la photo
+        <input type="file" id="upload" hidden (change)="onFileSelected($event)" />
+      </label>
+      <div *ngIf="photoMessage" class="toast-photo">
+        {{ photoMessage }}
+      </div>
+      
+      <h2 class="fullname">{{ user.first_name }} {{ user.last_name }}</h2>
+    </div>
+
+    <div class="profile-info" *ngIf="!isEditing; else editForm">
+      <div class="info-row"><span class="label">📧 Email</span> <span class="value">{{ user.email }}</span></div>
+      <div class="info-row"><span class="label">📞 Téléphone</span> <span class="value">{{ user.phone_number || 'N/A' }}</span></div>
+      <div class="info-row"><span class="label">📍 Adresse</span> <span class="value">{{ user.address || 'N/A' }}</span></div>
+      <div class="info-row"><span class="label">🛡️ Rôle</span> <span class="value">{{ user.role }}</span></div>
+    </div>
+
+    <ng-template #editForm>
+      <div class="edit-grid">
+        <input type="text" [(ngModel)]="formData.first_name" placeholder="Prénom" />
+        <input type="text" [(ngModel)]="formData.last_name" placeholder="Nom" />
+        <input type="text" [(ngModel)]="formData.phone_number" placeholder="Téléphone" />
+        <input type="text" [(ngModel)]="formData.address" placeholder="Adresse" />
+      </div>
+      <div class="btn-group">
+        <button class="btn primary" (click)="onSave()">💾 Enregistrer</button>
+        <button class="btn danger" (click)="onEdit()">❌ Annuler</button>
+      </div>
+    </ng-template>
+
+    <div *ngIf="!isEditing" class="btn-group">
+      <button class="btn primary" (click)="onEdit()">✏️ Modifier le profil</button>
+    </div>
+  </div>
+  <div *ngIf="successMessage" class="toast-success">
+    {{ successMessage }}
+  </div>
+  
+</div>
+
+<ng-template #loading>
+  <p class="loading-text">Chargement du profil...</p>
+</ng-template>

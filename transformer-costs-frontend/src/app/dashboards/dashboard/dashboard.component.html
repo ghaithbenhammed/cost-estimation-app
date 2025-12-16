@@ -1,0 +1,129 @@
+<div class="dashboard-container p-6">
+  <h2
+    class="dashboard-title text-2xl font-bold text-sky-900 mb-6 flex items-center gap-2"
+  >
+    📊 Tableau de bord - Administrateur
+  </h2>
+
+  <div class="stat-grid grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center">
+      <h3 class="text-sm font-medium text-gray-500">📄 Total Demandes</h3>
+      <p class="text-4xl font-bold text-gray-900 mt-2">{{ totalDemandes }}</p>
+    </div>
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center">
+      <h3 class="text-sm font-medium text-gray-500">✅ Taux Validation</h3>
+      <p class="text-4xl font-bold text-green-600 mt-2">
+        {{ tauxValidation }}%
+      </p>
+      <div
+        *ngIf="variationValidation !== null"
+        class="trend-indicator"
+        [ngClass]="{
+          'trend-up': variationValidation > 0,
+          'trend-down': variationValidation < 0
+        }"
+      ></div>
+    </div>
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center">
+      <h3 class="text-sm font-medium text-gray-500">📦 Total Factures</h3>
+      <p class="text-4xl font-bold text-gray-900 mt-2">{{ totalFactures }}</p>
+    </div>
+    <div class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center">
+      <h3 class="text-sm font-medium text-gray-500">🎯 Taux Génération</h3>
+      <p class="text-4xl font-bold text-pink-600 mt-2">{{ tauxGeneration }}%</p>
+    </div>
+  </div>
+
+  <div class="charts-grid grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div
+      *ngIf="chartsReady"
+      class="chart-card bg-white shadow-lg rounded-2xl p-6"
+    >
+      <h4
+        class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2"
+      >
+        📈 Évolution Activité : Demandes & Factures
+      </h4>
+      <canvas
+        baseChart
+        #barChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        chartType="bar"
+      >
+      </canvas>
+    </div>
+
+    <div
+      *ngIf="isPieDataReady()"
+      class="chart-card bg-white rounded-2xl p-6 shadow-md pie-chart-container"
+      #pieChartContainer
+    >
+      <h4
+        class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2"
+      >
+        🧩 Répartition Globale des Statuts
+      </h4>
+      <canvas
+        baseChart
+        #pieChart
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <div class="latest-requests bg-white shadow-md rounded-2xl p-6">
+    <h4 class="text-lg font-semibold text-sky-900 mb-6 flex items-center gap-2">
+      🕒 Activités Récentes
+    </h4>
+    <ul class="timeline">
+      <li
+        *ngFor="
+          let item of timeline.slice(0, afficherTout ? timeline.length : 6)
+        "
+        class="timeline-item"
+      >
+        <div class="timeline-point"></div>
+        <div class="timeline-content">
+          <div class="font-medium">
+            <span *ngIf="item.type === 'demande'" class="text-indigo-600"
+              >📄 Demande</span
+            >
+            <span *ngIf="item.type === 'facture'" class="text-pink-600"
+              >📦 Facture</span
+            >
+            – <strong>{{ item.client }}</strong> - {{ item.label }}
+          </div>
+          <div class="text-sm text-gray-500">
+            {{ item.date | date : "short" }}
+            <span class="status" [ngClass]="item.statut?.toLowerCase().trim()">
+              {{
+                item.statut === "pending"
+                  ? "En attente"
+                  : item.statut === "completed"
+                  ? "Terminée"
+                  : item.statut === "rejected"
+                  ? "Rejetée"
+                  : item.statut === "en_cours"
+                  ? "En cours"
+                  : item.statut === "emise"
+                  ? "Émise"
+                  : item.statut
+              }}
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="toggle-wrapper">
+      <button (click)="afficherTout = !afficherTout" class="toggle-button">
+        {{ afficherTout ? "Afficher moins" : "Afficher plus" }}
+        <span>{{ afficherTout ? "🔼" : "🔽" }}</span>
+      </button>
+    </div>
+  </div>
+</div>

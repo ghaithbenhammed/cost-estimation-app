@@ -1,0 +1,161 @@
+.profile-wrapper {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #e4e7ed;
+  min-height: 100vh;
+}
+
+.profile-panel {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  max-width: 520px;
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-panel {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.avatar {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  font-size: 14px;
+  color: #5da5b3;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-bottom: 8px;
+}
+.upload-btn:hover {
+  color: #394054;
+}
+
+.fullname {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1c1c1f;
+}
+
+.profile-info {
+  margin-top: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.label {
+  font-weight: 600;
+  color: #394054;
+}
+
+.value {
+  color: #5d5d5f;
+}
+
+.edit-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.edit-grid input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.edit-grid input:focus {
+  border-color: #5DA5B3;
+}
+
+.btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn.primary {
+  background-color: #5DA5B3;
+  color: white;
+}
+.btn.primary:hover {
+  background-color: #468b99;
+}
+
+.btn.danger {
+  background-color: #e74c3c;
+  color: white;
+}
+.btn.danger:hover {
+  background-color: #c0392b;
+}
+.toast-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px 16px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+.toast-photo {
+  background-color: #f0f8ff;
+  color: #0077aa;
+  padding: 10px 16px;
+  margin-top: 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}

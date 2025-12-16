@@ -1,0 +1,76 @@
+<mat-toolbar class="custom-toolbar">
+  <div class="left-section">
+    <button
+      mat-icon-button
+      class="icon-btn"
+      (click)="toggleSidebar()"
+      aria-label="Ouvrir la navigation"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <span class="app-title">SACEM INDUSTRIES</span>
+
+  <div class="right-section">
+    <button
+      mat-icon-button
+      class="icon-btn"
+      (click)="toggleTheme()"
+      title="Changer le thème"
+    >
+      <mat-icon>brightness_6</mat-icon>
+    </button>
+
+    <div class="menu-item relative" (mouseleave)="showNotifications = false">
+      <button
+        mat-icon-button
+        class="icon-btn"
+        (click)="toggleNotifications()"
+        aria-label="Voir les notifications"
+      >
+        <mat-icon>notifications</mat-icon>
+        <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+      </button>
+
+      <div *ngIf="showNotifications" class="notification-dropdown">
+        <div class="dropdown-header">🔔 Notifications</div>
+
+        <ng-container *ngIf="notifications.length > 0; else noNotif">
+          <div
+            *ngFor="let notif of notifications"
+            class="notification-item"
+            [ngClass]="{ unread: !notif.is_read }"
+            (click)="handleNotificationClick(notif)"
+          >
+            <div class="notif-content">{{ notif.content }}</div>
+            <div class="notif-date">
+              {{ notif.created_at | date : "short" }}
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noNotif>
+          <div class="notification-empty">Aucune notification</div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="user-info" (click)="toggleMenu()" title="Compte utilisateur">
+      <img
+        [src]="user?.profile_picture || 'assets/default-avatar.png'"
+        alt="profil"
+        class="avatar"
+      />
+      <span>{{ user?.first_name }}</span>
+    </div>
+
+    <div class="dropdown" *ngIf="showMenu" (mouseleave)="showMenu = false">
+      <ul>
+        <li (click)="goToProfile()">👤 Mon profil</li>
+        <li (click)="goToChat()">💬 Chat</li>
+        <li (click)="logout()" title="Se déconnecter">🚪 Déconnexion</li>
+      </ul>
+    </div>
+  </div>
+</mat-toolbar>

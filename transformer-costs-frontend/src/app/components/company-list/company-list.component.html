@@ -1,0 +1,36 @@
+<div class="company-container">
+    <div class="header-row">
+      <h2 class="title">Liste des Entreprises</h2>
+      <div class="search-bar">
+        <select [(ngModel)]="searchColumn" class="filter-select" title="Filtrer par">
+          <option value="name">Nom</option>
+          <option value="displayName">Nom d'affichage</option>
+        </select>
+        <input [(ngModel)]="searchText" placeholder="🔍 Rechercher..." class="filter-input" />
+      </div>
+    </div>
+  
+    <div class="company-table-wrapper">
+      <table *ngIf="companies.length > 0" class="company-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Nom d'affichage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of filterByColumn(); let i = index"
+              [ngClass]="{'alt-row': i % 2 === 0}"
+              (click)="viewDetails(company.name)">
+            <td>{{ company.name }}</td>
+            <td>{{ company.displayName }}</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <p *ngIf="companies.length === 0" class="empty-message">
+        Aucune entreprise trouvée.
+      </p>
+    </div>
+  </div>
+  

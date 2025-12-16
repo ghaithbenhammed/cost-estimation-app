@@ -1,0 +1,61 @@
+<div class="chat-inbox">
+  <h2 class="section-title">Mes conversations</h2>
+
+  <div class="inbox-container">
+    <ul class="inbox-list">
+      <li
+        *ngFor="let conv of conversations"
+        (click)="onSelectConversation(conv)"
+        [class.selected]="selectedConversationId === conv.id"
+        class="conversation-item"
+      >
+        <ng-container *ngIf="getReceiver(conv) as receiver">
+          <div class="avatar-wrapper">
+            <img
+              [src]="receiver.profile_picture || 'assets/default-avatar.png'"
+              alt="profil"
+              class="avatar"
+            />
+            <span
+              *ngIf="receiver.is_online"
+              class="status-dot"
+              title="En ligne"
+            ></span>
+          </div>
+
+          <div class="conversation-info">
+            <div class="name">
+              {{
+                receiver.full_name ||
+                  receiver.first_name + " " + receiver.last_name
+              }}
+            </div>
+            <div class="last-message">
+              {{ conv.last_message?.content || "Nouvelle conversation..." }}
+            </div>
+          </div>
+
+          <div class="meta-info">
+            <div class="time">
+              {{ conv.last_message?.timestamp | date : "shortTime" }}
+            </div>
+            <div
+              *ngIf="conv.unread_count && conv.unread_count > 0"
+              class="unread-badge"
+            >
+              {{ conv.unread_count }}
+            </div>
+          </div>
+
+          <button
+            class="delete-btn"
+            (click)="delete(conv.id); $event.stopPropagation()"
+            title="Supprimer"
+          >
+            ✖️
+          </button>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
+</div>

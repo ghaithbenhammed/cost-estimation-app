@@ -1,0 +1,26 @@
+<div class="chat-box-container">
+  <div class="messages" id="message-container">
+    <div
+      *ngFor="let msg of messages"
+      class="message-wrapper"
+      [ngClass]="msg.sender.id == currentUserId ? 'sent' : 'received'"
+    >
+      <div class="message-bubble">
+        <div class="message-content">{{ msg.content }}</div>
+        <div class="message-time">
+          {{ msg.sender.first_name }} · {{ msg.timestamp | date : "shortTime" }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <textarea
+      [(ngModel)]="newMessage"
+      (keydown)="handleKeydown($event)"
+      placeholder="Écrire un message..."
+      rows="1"
+    ></textarea>
+    <button (click)="sendMessage()">➤</button>
+  </div>
+</div>

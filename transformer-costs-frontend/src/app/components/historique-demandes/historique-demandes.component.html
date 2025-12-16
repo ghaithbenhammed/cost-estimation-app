@@ -1,0 +1,38 @@
+<div class="page-container mt-4">
+  <button class="back-btn mb-4" (click)="goBack()">⬅ Retour</button>
+
+  <h2 class="page-title">Historique des Demandes - Client {{ customerNo }}</h2>
+
+  <p class="message text-center" *ngIf="message">{{ message }}</p>
+
+  <div class="table-responsive" *ngIf="demandes.length > 0">
+    <table class="table table-bordered shadow-sm table-hover align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>Type</th>
+          <th>Puissance</th>
+          <th>Tension Primaire</th>
+          <th>Tension Secondaire</th>
+          <th>Fréquence</th>
+          <th>Échauffement Huile</th>
+          <th>Échauffement Conducteur</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let demande of demandes">
+          <td>{{ demande.request_type }}</td>
+          <td>{{ demande.power }}</td>
+          <td>{{ demande.primary_voltage }}</td>
+          <td>{{ demande.secondary_voltage }}</td>
+          <td>{{ demande.frequency }}</td>
+          <td>{{ demande.oil_heating }}</td>
+          <td>{{ demande.conductor_heating }}</td>
+          <td>{{ demande.status }}</td>
+          <td>{{ demande.created_at | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

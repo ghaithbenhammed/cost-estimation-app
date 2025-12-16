@@ -1,0 +1,130 @@
+.company-container {
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1c1c1f;
+  margin: 0;
+}
+
+.search-bar {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-select,
+.filter-input {
+  border: 1.5px solid #5da5b3;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease-in-out;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  border-color: #394054;
+  box-shadow: 0 0 5px rgba(93, 165, 179, 0.4);
+}
+
+.company-table-wrapper {
+  overflow-x: auto;
+}
+
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.company-table th {
+  background-color: #f5f7fa;
+  color: #05143b;
+  text-align: left;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid #dce3ec;
+}
+
+.company-table td {
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #1c1c1f;
+  transition: background-color 0.3s ease;
+}
+
+.company-table tr {
+  transition: background-color 0.3s ease;
+}
+
+.company-table tr.alt-row {
+  background-color: #f9fbfd;
+}
+
+.company-table tr:hover {
+  background-color: #e1ecf3;
+  cursor: pointer;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-bar {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .filter-input,
+  .filter-select {
+    width: 100%;
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

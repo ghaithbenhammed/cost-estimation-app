@@ -1,0 +1,65 @@
+<div class="login-wrapper">
+  <div class="login-box">
+    <div class="login-icon">
+      <img src="assets/lock-icon.png" alt="Icône de connexion" />
+    </div>
+
+    <h2>Connexion</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label for="email">Adresse email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="exemple@domaine.com"
+        [class.invalid]="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+      />
+      <div
+        class="field-error"
+        *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched"
+      >
+        L'adresse email est requise.
+      </div>
+      <div
+        class="field-error"
+        *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched"
+      >
+        Format d'email invalide.
+      </div>
+
+      <label for="password">Mot de passe</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        placeholder="Votre mot de passe"
+        [class.invalid]="
+          loginForm.get('password')?.invalid &&
+          loginForm.get('password')?.touched
+        "
+      />
+      <div
+        class="field-error"
+        *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched"
+      >
+        Le mot de passe est requis.
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="showPassword" (change)="togglePassword()" />
+        <label for="showPassword">Afficher le mot de passe</label>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+      <button type="submit" [disabled]="isBlocked">Se connecter</button>
+    </form>
+  </div>
+</div>

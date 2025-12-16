@@ -1,0 +1,145 @@
+<div class="container mt-4 p-4 shadow-sm rounded bg-white">
+  <h2>📋 Nomenclature des matériaux</h2>
+
+  <div *ngIf="readonlyMode" class="alert alert-info mt-3">
+    🔒 Cette nomenclature est en lecture seule car la demande est terminée.
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <p><strong>Dossier :</strong> {{ bomHeader?.Design_File_no }}</p>
+      <p><strong>Objet :</strong> {{ bomHeader?.No }}</p>
+    </div>
+    <div class="col-md-6">
+      <p><strong>Client :</strong> {{ customerName }} ({{ customerNo }})</p>
+      <p>
+        <strong>Date :</strong>
+        <input
+          type="date"
+          class="form-control w-auto d-inline"
+          [(ngModel)]="nomenclatureDate"
+          [disabled]="readonlyMode"
+          title="Date de création de la nomenclature"
+        />
+      </p>
+      <p><strong>Quantité :</strong> 01</p>
+    </div>
+  </div>
+
+  <h5 class="text-secondary">🔗 Lignes récupérées depuis Navision</h5>
+  <table class="table table-hover table-bordered mt-3">
+    <thead class="table-light">
+      <tr>
+        <th>Code</th>
+        <th>Désignation</th>
+        <th>Unité</th>
+        <th>Quantité</th>
+        <th>Remarque</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let ligne of bomLines; let i = index"
+        [ngClass]="{ 'table-active': i % 2 === 0 }"
+      >
+        <td>{{ ligne.No }}</td>
+        <td>{{ ligne.Description }}</td>
+        <td>{{ ligne.Unit_of_Measure_Code }}</td>
+        <td>{{ ligne.Quantity_per }}</td>
+        <td>
+          <input
+            class="form-control"
+            [(ngModel)]="ligne.remarque"
+            placeholder="Ajouter une remarque..."
+            title="Remarque pour cette ligne"
+            [disabled]="readonlyMode"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5 class="text-secondary mt-5">➕ Lignes ajoutées manuellement</h5>
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Code</th>
+        <th>Désignation</th>
+        <th>Unité</th>
+        <th>Quantité</th>
+        <th>Remarque</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ligne of customBomLines">
+        <td>
+          <input
+            class="form-control"
+            [(ngModel)]="ligne.code"
+            placeholder="Code"
+            title="Code"
+            [disabled]="readonlyMode"
+          />
+        </td>
+        <td>
+          <input
+            class="form-control"
+            [(ngModel)]="ligne.designation"
+            placeholder="Désignation"
+            title="Désignation"
+            [disabled]="readonlyMode"
+          />
+        </td>
+        <td>
+          <input
+            class="form-control"
+            [(ngModel)]="ligne.unite"
+            placeholder="Unité"
+            title="Unité"
+            [disabled]="readonlyMode"
+          />
+        </td>
+        <td>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="ligne.quantite"
+            placeholder="Quantité"
+            title="Quantité"
+            [disabled]="readonlyMode"
+          />
+        </td>
+        <td>
+          <input
+            class="form-control"
+            [(ngModel)]="ligne.remarque"
+            placeholder="Remarque"
+            title="Remarque"
+            [disabled]="readonlyMode"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button
+    class="btn btn-outline-primary mb-3"
+    (click)="addCustomLine()"
+    *ngIf="!readonlyMode"
+  >
+    ➕ Ajouter une ligne
+  </button>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button
+      class="btn btn-success"
+      (click)="confirmerBOM()"
+      *ngIf="!readonlyMode"
+    >
+      ✅ Confirmer la nomenclature
+    </button>
+    <button class="btn btn-secondary" (click)="goBackToBomLines()">
+      ⬅ Retour
+    </button>
+  </div>
+</div>

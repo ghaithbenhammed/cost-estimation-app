@@ -1,0 +1,121 @@
+<div class="dashboard-container p-6">
+  <h2
+    class="dashboard-title text-2xl font-bold text-sky-900 mb-6 flex items-center gap-2"
+  >
+    <span>📊</span> Tableau de bord - Responsable des Coûts
+  </h2>
+
+  <div class="stat-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div
+      class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all"
+    >
+      <h3 class="text-sm font-medium text-gray-500">📦 Total Factures</h3>
+      <p class="text-4xl font-bold text-gray-900 mt-2">{{ totalBoms }}</p>
+    </div>
+    <div
+      class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all"
+    >
+      <h3 class="text-sm font-medium text-gray-500">✅ Taux de Génération</h3>
+      <p class="text-4xl font-bold text-green-600 mt-2">
+        {{ tauxGeneration }}%
+      </p>
+    </div>
+    <div
+      class="stat-card bg-white shadow-lg rounded-2xl p-6 text-center hover:shadow-xl transition-all"
+    >
+      <h3 class="text-sm font-medium text-gray-500">⏱️ Délai Moyen</h3>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">
+        {{ tempsMoyen }} jours
+      </p>
+    </div>
+  </div>
+
+  <div class="charts-grid grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <div
+      *ngIf="chartsReady"
+      class="chart-card bg-white shadow-lg rounded-2xl p-6"
+    >
+      <h4
+        class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2"
+      >
+        📈 Factures par Jour
+      </h4>
+      <canvas
+        baseChart
+        #barChart
+        [data]="chartData"
+        [options]="chartOptions"
+        chartType="bar"
+        aria-label="Graphique des factures par jour"
+      >
+      </canvas>
+    </div>
+
+    <div
+      *ngIf="isPieDataReady()"
+      class="chart-card bg-white shadow-lg rounded-2xl p-6 pie-chart-container"
+      #pieChartContainer
+    >
+      <h4
+        class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2"
+      >
+        🧩 Répartition des Statuts
+      </h4>
+      <canvas
+        baseChart
+        #pieChart
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [type]="pieChartType"
+        aria-label="Diagramme de répartition des statuts"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <div class="latest-requests bg-white shadow-lg rounded-2xl p-6">
+    <h4 class="text-lg font-semibold text-sky-900 mb-4 flex items-center gap-2">
+      📋 5 Dernières Factures
+    </h4>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-600">
+          <tr>
+            <th class="p-3">Dossier</th>
+            <th class="p-3">Objet</th>
+            <th class="p-3">Client</th>
+            <th class="p-3">Date</th>
+            <th class="p-3">Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let facture of dernieresFactures"
+            class="border-b hover:bg-gray-50"
+          >
+            <td class="p-3 font-medium text-gray-800">{{ facture.dossier }}</td>
+            <td class="p-3 text-gray-600">{{ facture.objet }}</td>
+            <td class="p-3 text-gray-600">{{ facture.client_name }}</td>
+            <td class="p-3 text-gray-600">
+              {{ facture.date_creation | date : "shortDate" }}
+            </td>
+            <td class="p-3">
+              <span
+                class="status"
+                [ngClass]="facture.status?.toLowerCase().trim()"
+              >
+                {{
+                  facture.status === "en_cours"
+                    ? "En cours"
+                    : facture.status === "emise"
+                    ? "Émise"
+                    : facture.status
+                }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

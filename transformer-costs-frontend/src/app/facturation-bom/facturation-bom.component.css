@@ -1,0 +1,108 @@
+.page-title {
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.loading-zone {
+  text-align: center;
+  font-size: 18px;
+  color: #7b7b7b;
+  margin-top: 40px;
+}
+
+.facture-wrapper {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.05);
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.facture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.facture-info p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.facture-table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  
+}
+
+.facture-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.facture-table thead {
+  background: #f2f6fc;
+}
+
+.facture-table th, .facture-table td {
+  text-align: center;
+  padding: 14px;
+  border: 1px solid #e0e0e0;
+}
+
+.facture-table th {
+  font-weight: 600;
+  color: #394054;
+  
+}
+
+.facture-table td {
+  color: #4a4a4a;
+  
+}
+
+.prix-input {
+  width: 100px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  text-align: center;
+}
+
+.facture-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.total-global {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.btn-pdf {
+  background-color: #5DA5B3;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-pdf:hover {
+  background-color: #394054;
+}

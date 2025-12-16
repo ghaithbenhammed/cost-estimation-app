@@ -1,0 +1,52 @@
+<div class="page-container mt-4">
+  <h2 class="page-title">📋 Nomenclatures à Facturer</h2>
+
+  <div class="filter-container">
+    <label for="statusFilter" class="filter-label">Filtrer :</label>
+    <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="applyFilter()" class="filter-select">
+      <option value="all">Toutes</option>
+      <option value="en_cours">En cours</option>
+      <option value="emise">Émise</option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading-text">⏳ Chargement en cours...</div>
+
+  <div *ngIf="!loading && filteredBoms.length === 0" class="empty-message">
+    🎉 Aucune nomenclature pour ce filtre.
+  </div>
+
+  <div *ngIf="!loading" class="card-container">
+    <div class="card" *ngFor="let bom of filteredBoms">
+      <div class="card-body">
+        <button class="delete-btn" (click)="supprimerFacture(bom)">✖</button>
+        <h5 class="card-title">
+          🧾 {{ bom.objet }}
+          <span class="badge" [ngClass]="getStatusBadgeClass(bom.status)">
+            {{ getStatusLabel(bom.status) }}
+          </span>
+        </h5>
+
+        <p><strong>📁 Dossier :</strong> {{ bom.dossier }}</p>
+        <p><strong>👤 Client :</strong> {{ bom.client_name }}</p>
+        <p><strong>🗓️ Date :</strong> {{ bom.date_creation }}</p>
+
+        <div class="action-buttons">
+          <button class="btn-view"
+             [disabled]="bom.status === 'emise'"
+             [ngClass]="{ 'disabled': bom.status === 'emise' }"
+             (click)="allerVersFacturation(bom.request)">
+             📄 Générer Facture
+          </button>
+  
+          <button class="btn-status"
+                 [ngClass]="bom.status === 'en_cours' ? 'emise' : 'en-cours'"
+                 (click)="changerStatut(bom)">
+             {{ bom.status === 'en_cours' ? '✅ Marquer comme Émise' : '↩️ Revenir à En cours' }}
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

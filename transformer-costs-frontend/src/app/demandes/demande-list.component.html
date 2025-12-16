@@ -1,0 +1,95 @@
+<div class="page-container mt-4">
+  <h2 class="page-title">📋 Liste des demandes client</h2>
+
+  <div class="filter-container">
+    <label for="statusFilter" class="filter-label">Filtrer :</label>
+    <select
+      id="statusFilter"
+      [(ngModel)]="selectedStatus"
+      (change)="filterByStatus()"
+      class="filter-select"
+    >
+      <option value="all">Toutes</option>
+      <option value="pending">En attente</option>
+      <option value="completed">Terminée</option>
+      <option value="rejected">Rejetée</option>
+    </select>
+  </div>
+
+  <div class="card-container">
+    <div *ngFor="let demande of filteredDemandes" class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ demande.customer_name || "Client inconnu" }} ({{
+            demande.customer_no
+          }})
+          <span class="badge" [ngClass]="getBadgeClass(demande.status)">
+            {{ getStatusLabel(demande.status) }}
+          </span>
+        </h5>
+
+        <p><strong>Type :</strong> {{ demande.request_type }}</p>
+        <p><strong>Puissance :</strong> {{ demande.power }}</p>
+        <p>
+          <strong>Tension :</strong> {{ demande.primary_voltage }} /
+          {{ demande.secondary_voltage }}
+        </p>
+        <p><strong>Fréquence :</strong> {{ demande.frequency }}</p>
+
+        <div class="form-group mt-3">
+          <label [for]="'statusSelect-' + demande.id" class="form-label"
+            >Changer de statut :</label
+          >
+          <select
+            [id]="'statusSelect-' + demande.id"
+            [(ngModel)]="demande.status"
+            (change)="updateStatus(demande)"
+            class="form-select form-select-sm"
+            title="Changer le statut de la demande"
+          >
+            <option value="pending">En attente</option>
+            <option value="completed">Terminée</option>
+            <option value="rejected">Rejetée</option>
+          </select>
+        </div>
+
+        <!-- Actions selon le statut -->
+        <div class="action-buttons mt-3">
+          <!-- En attente : tout est actif -->
+          <ng-container *ngIf="demande.status === 'pending'">
+            <button class="btn-view" (click)="voirNomenclature(demande)">
+              👁️ Voir la nomenclature
+            </button>
+            <button class="btn-delete" (click)="supprimerDemande(demande)">
+              🗑️ Supprimer
+            </button>
+          </ng-container>
+
+          <!-- Terminée : vue possible -->
+          <ng-container *ngIf="demande.status === 'completed'">
+            <button class="btn-view" (click)="voirNomenclature(demande)">
+              👁️ Voir la nomenclature
+            </button>
+            <button class="btn-delete" (click)="supprimerDemande(demande)">
+              🗑️ Supprimer
+            </button>
+          </ng-container>
+
+          <!-- Rejetée : vue désactivée -->
+          <ng-container *ngIf="demande.status === 'rejected'">
+            <button
+              class="btn-view disabled-button"
+              disabled
+              title="La nomenclature est inaccessible pour une demande rejetée"
+            >
+              🚫 Voir la nomenclature
+            </button>
+            <button class="btn-delete" (click)="supprimerDemande(demande)">
+              🗑️ Supprimer
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

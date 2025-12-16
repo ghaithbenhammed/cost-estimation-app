@@ -1,0 +1,137 @@
+<div class="admin-container">
+  <h2 class="admin-title">Admin</h2>
+
+  <!-- Statistiques -->
+  <div class="stats-row">
+    <div class="stat-card blue" *ngFor="let stat of userStats">
+      <h3>{{ stat.count }}</h3>
+      <p>{{ stat.label }}</p>
+    </div>
+  </div>
+
+  <!-- Zone principale -->
+  <div class="main-content">
+    <div class="user-table">
+      <div class="search-bar">
+        <input type="text"
+               placeholder="🔍 Rechercher un utilisateur"
+               class="search-input"
+               [(ngModel)]="searchQuery" />
+        <button class="add-btn" (click)="openModal()">➕ Ajouter un utilisateur</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Nom complet</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Téléphone</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td><img [src]="user.profile_picture || 'assets/default-avatar.png'" alt="avatar" /></td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              {{ user.role }}
+              <span *ngIf="!user.is_active"
+                    class="badge-desactive"
+                    [ngClass]="{ 'ligne-desactive': !user.is_active }">Désactivé</span>
+            </td>
+            <td>{{ user.phone_number }}</td>
+            <td>
+              <label class="switch">
+                <input type="checkbox"
+                       [checked]="user.is_active"
+                       (change)="toggleActivation(user)"
+                       [disabled]="user.role === 'SuperAdmin'"
+                       [attr.aria-label]="'Statut de ' + user.first_name + ' ' + user.last_name"
+                       [attr.title]="user.role === 'SuperAdmin' ? 'Impossible de désactiver un SuperAdmin' : 'Activer ou désactiver le compte'" />
+                <span class="slider"></span>
+              </label>
+            </td>
+            <td>
+              <button class="edit" (click)="editUser(user)">✏️</button>
+              <button class="delete" (click)="deleteUser(user.id)">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MODAL FORM -->
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()"></div>
+  <div class="modal-content" *ngIf="showModal">
+    <h4>{{ editMode ? 'Modifier' : 'Ajouter' }} un utilisateur</h4>
+   <form [formGroup]="userForm" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+  <input formControlName="username" placeholder="Nom d’utilisateur" />
+  <div class="error" *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+    Ce champ est requis.
+  </div>
+
+  <input formControlName="password" type="password" placeholder="Mot de passe" />
+  <div class="error" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+    Le mot de passe est requis.
+  </div>
+
+  <input formControlName="password_confirmation" type="password" placeholder="Confirmation du mot de passe" />
+  <div class="error" *ngIf="userForm.get('password_confirmation')?.invalid && userForm.get('password_confirmation')?.touched">
+    La confirmation du mot de passe est requise.
+  </div>
+
+  <label for="title">Titre</label>
+  <select formControlName="title" id="title">
+    <option value="" disabled selected hidden>Sélectionner un titre</option>
+    <option value="M.">Monsieur</option>
+    <option value="Mme">Madame</option>
+  </select>
+  <div class="error" *ngIf="userForm.get('title')?.invalid && userForm.get('title')?.touched">
+    Merci de sélectionner un titre.
+  </div>
+
+  <input formControlName="first_name" placeholder="Prénom" />
+  <div class="error" *ngIf="userForm.get('first_name')?.invalid && userForm.get('first_name')?.touched">
+    Ce champ est requis.
+  </div>
+  <input formControlName="last_name" placeholder="Nom" />
+  <div class="error" *ngIf="userForm.get('last_name')?.invalid && userForm.get('last_name')?.touched">
+    Ce champ est requis.
+  </div>
+
+  <input formControlName="email" type="email" placeholder="Email" />
+  <div class="error" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+    Une adresse email valide est requise.
+  </div>
+
+  <input formControlName="phone_number" placeholder="Téléphone" />
+  <input formControlName="address" placeholder="Adresse" />
+
+
+  <label for="photo">Photo de profil</label>
+  <input id="photo" type="file" (change)="onFileChange($event)" />
+
+  <label for="role">Rôle</label>
+  <select id="role" formControlName="role">
+    <option value="" disabled>Sélectionner un rôle</option>
+    <option value="Admin">Admin</option>
+    <option value="ResponsableEtude">Responsable Étude</option>
+    <option value="ResponsableCout">Responsable Coût</option>
+  </select>
+  <div class="error" *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">
+    Le rôle est requis.
+  </div>
+
+  <button type="submit" [disabled]="userForm.invalid">
+    {{ editMode ? '✔️ Modifier' : 'Créer' }}
+  </button>
+  <button type="button" class="cancel-btn" (click)="closeModal()">Annuler</button>
+</form>
+
+  </div>
+</div>

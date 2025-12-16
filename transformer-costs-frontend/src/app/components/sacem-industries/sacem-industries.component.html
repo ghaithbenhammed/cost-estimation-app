@@ -1,0 +1,117 @@
+<div class="container mt-4">
+  <button class="btn btn-secondary" (click)="goBack()">
+    ⬅ Retour
+  </button>
+  <div class="card mt-3">
+    <h2>Détails de SACEM INDUSTRIES</h2>
+
+    <p><strong>Nom complet:</strong> {{ companyDetails?.name }}</p>
+    <p><strong>Nom d'affichage:</strong> {{ companyDetails?.displayName }}</p>
+    <p><strong>ID:</strong> {{ companyDetails?.id }}</p>
+    <p><strong>Business Profile ID:</strong> {{ companyDetails?.businessProfileId }}</p>
+
+
+  <!-- Boutons principaux -->
+  <div class="mb-3">
+    <button class="btn btn-info" (click)="goToCustomers()">Afficher les Données des Clients</button>
+    <button class="btn btn-info" (click)="goToBomHeaders()">📋 Voir les en-têtes BOM</button>
+    <button class="btn btn-warning" (click)="goToBomLines()">📌 Voir les lignes BOM</button>
+    <button 
+      [class.btn-danger]="isFactureMode" 
+      [class.btn-success]="!isFactureMode"
+      class="btn"
+      (click)="toggleFactureMode()">
+      {{ isFactureMode ? '🚫 Quitter Mode Facture' : '🧾 Mode Facture' }}
+    </button>
+  </div>
+</div>
+
+  
+
+  <!-- Mode Facture : Sélectionner un BOM avant d'afficher la facture -->
+  <div *ngIf="isFactureMode && !isHeaderSelected" class="facture-container">
+    <h3 class="facture-header">Sélectionnez un en-tête BOM pour générer la facture</h3>
+    <table class="facture-table">
+      <thead>
+        <tr>
+          <th>Production BOM No</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Unit of Measure</th>
+          <th>Last Date Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let header of bomHeaders" 
+          (click)="goToBomLinesForHeader(header.No)" 
+          [class.highlighted-row]="selectedHeader && selectedHeader.No === header.No">
+          <td>{{ header.No }}</td>
+          <td>{{ header.Description }}</td>
+          <td>{{ header.Status }}</td>
+          <td>{{ header.Unit_of_Measure_Code }}</td>
+          <td>{{ header.Last_Date_Modified }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mode Facture : Affichage du PDF après sélection d'un en-tête BOM -->
+  <div *ngIf="isFactureMode && isHeaderSelected" class="facture-container">
+    <div class="facture-header">
+      <h2>Facture</h2>
+    </div>
+
+    <div class="facture-details">
+      <p><strong>Objet (No BOM) :</strong> {{ selectedBomNo }}</p>
+      <p><strong>Dossier :</strong> {{ selectedDesignFileNo }}</p>
+    </div>
+
+    <div class="facture-details-row">
+      <div class="facture-input-group">
+        <label for="quantity">Quantité :</label>
+        <select id="quantity" [(ngModel)]="selectedQuantity" class="form-control">
+          <option *ngFor="let q of [1,2,3,4,5,6,7,8,9,10]" [value]="q">{{ q }}</option>
+        </select>
+      </div>
+    
+      <div class="facture-input-group">
+        <label for="date">Date :</label>
+        <input id="date" type="date" [min]="todayDate" [(ngModel)]="selectedDate" class="form-control" />
+      </div>
+    </div>
+    
+    <table class="facture-table">
+      <thead>
+        <tr>
+          <th>N</th>
+          <th>Désignation</th>
+          <th>Unité</th>
+          <th>Qté</th>
+          <th>Code</th>
+          <th>Prix</th>
+          <th>Prix personnalisé</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let line of filteredBomLines; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ line.Description }}</td>
+          <td>{{ line.Unit_of_Measure_Code }}</td>
+          <td>{{ line.Quantity_per }}</td>
+          <td>{{ line.No }}</td>
+          <td>{{ line.Unit_Cost | number:'1.2-2' }}</td>
+          <td>
+            <label for="customPrice-{{line.No}}" class="sr-only">Prix personnalisé</label>
+            <input id="customPrice-{{line.No}}" type="number" [(ngModel)]="line.customPrice" 
+                   title="Saisissez un prix personnalisé pour cet article" 
+                   class="form-control" />
+          </td>
+          <td>{{ calculateTotal(line) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="download-btn" (click)="generatePDF()">Télécharger en PDF</button>
+  </div>
+</div>

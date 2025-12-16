@@ -1,0 +1,313 @@
+/* ✅ Style global */
+.container {
+    background-color: #E0E2E8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+/* ✅ Style de la carte */
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Titres */
+h2, h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #394054;
+    text-align: center;
+}
+
+/* ✅ Paragraphes */
+p {
+    font-size: 16px;
+    color: #394054;
+    line-height: 1.5;
+}
+
+/* ✅ Boutons */
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn {
+    font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 5px;
+    transition: all 0.3s;
+}
+
+.btn-secondary {
+    background-color: #5DA5B3;
+    border: none;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #4b8a9e;
+    transform: scale(1.05);
+}
+
+.btn-info {
+    background-color: #1C1C1F;
+    border: none;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.btn-warning {
+    background-color: #B0C0D4;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #394054;
+    transform: scale(1.05);
+}
+
+/* ✅ Espacement et disposition */
+.mb-3 {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ✅ Style des tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #B0C0D4;
+    font-size: 14px;
+}
+
+th {
+    background-color: #5DA5B3;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #F9F9F9;
+}
+
+tr:hover {
+    background-color: #B0C0D4;
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+/* ✅ Mise en évidence de la ligne sélectionnée */
+.selected-row {
+    background-color: #394054;
+    color: white;
+}
+
+/* ✅ Style pour les champs de recherche */
+input[type="text"], select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #B0C0D4;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #fff;
+    color: #394054;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #5DA5B3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(93, 165, 179, 0.7);
+}
+
+select:hover {
+    background-color: #f1f5f8;
+}
+
+/* ✅ Style général de la facture */
+.facture-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* ✅ En-tête de la facture */
+.facture-header {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #5DA5B3;
+    margin-bottom: 20px;
+}
+
+/* ✅ Informations générales */
+.facture-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* ✅ Alignement propre des quantités et dates */
+.facture-details-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.facture-input-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 15px;
+}
+
+.facture-input-group:last-child {
+    margin-right: 0;
+}
+
+/* ✅ Nouveau : Style amélioré du tableau */
+.facture-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.facture-table th {
+    background: #5DA5B3;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid white;
+}
+
+.facture-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.facture-table tr:hover {
+    background-color: #f0f8ff;
+}
+
+/* ✅ Input de prix personnalisé */
+.facture-table input {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* ✅ Nouveau style du bouton Télécharger PDF */
+.download-btn {
+    background: #5DA5B3;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.download-btn:hover {
+    background: #4C8D9F;
+    transform: translateY(-2px);
+}
+
+/* ✅ Ligne sélectionnée */
+.highlighted-row {
+    background-color: #f0f8ff;
+    cursor: pointer;
+}
+
+.highlighted-row:hover {
+    background-color: #cde6f5;
+}
+
+/* ✅ Bouton "Quitter Mode Facture" en rouge */
+.quit-facture-btn {
+    background: #D9534F;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* ✅ Effet hover : Rouge plus foncé */
+.quit-facture-btn:hover {
+    background: #C9302C;
+    transform: translateY(-2px);
+}
+
+.btn-facture {
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-facture:hover {
+    background-color: #C0392B !important;
+    transform: translateY(-2px);
+}
+
+/* ✅ Style pour la ligne sélectionnée */
+.selected {
+    background-color: #d1ecf1 !important;
+    transition: background-color 0.3s;
+}
+
+/* ✅ Amélioration des cases à cocher */
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}

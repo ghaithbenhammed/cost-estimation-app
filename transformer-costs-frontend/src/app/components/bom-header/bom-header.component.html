@@ -1,0 +1,105 @@
+<div class="bom-container mt-4">
+  <button class="back-btn" (click)="goBack()">⬅ Retour</button>
+
+  <h2 class="text-center mb-4">Liste des En-têtes BOM</h2>
+
+  <div class="search-section">
+    <select
+      [(ngModel)]="searchColumn"
+      class="select-filter"
+      title="Choisir la colonne"
+    >
+      <option value="No">Production BOM No</option>
+      <option value="Description">Description</option>
+      <option value="Status">Statut</option>
+      <option value="Unit_of_Measure_Code">Unité de mesure</option>
+      <option value="Design_File_no">Design File No</option>
+      <option value="Last_Date_Modified">Date de modification</option>
+    </select>
+
+    <div class="input-search-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (ngModelChange)="searchBomHeaders()"
+        placeholder="Rechercher un en-tête BOM"
+        class="input-search"
+      />
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div
+      class="spinner-border text-primary"
+      role="status"
+      aria-label="Chargement"
+    >
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <div class="text-muted mt-2">Chargement des en-têtes BOM...</div>
+  </div>
+
+  <div *ngIf="!loading && paginatedBomHeaders.length > 0" class="table-card">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered shadow-sm table-hover align-middle text-center"
+      >
+        <thead class="table-light">
+          <tr>
+            <th>Production BOM No</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Unité</th>
+            <th>Design File No</th>
+            <th>Dernière modification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let header of paginatedBomHeaders"
+            (click)="goToBomLinesForHeader(header.No)"
+            [class.table-active]="selectedHeader?.No === header.No"
+          >
+            <td>{{ header.No }}</td>
+            <td>{{ header.Description }}</td>
+            <td>{{ header.Status }}</td>
+            <td>{{ header.Unit_of_Measure_Code }}</td>
+            <td>{{ header.Design_File_no }}</td>
+            <td>{{ header.Last_Date_Modified }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!loading && paginatedBomHeaders.length === 0"
+    class="text-center mt-5 text-muted fst-italic"
+  >
+    ❌ Aucun en-tête BOM trouvé.
+  </div>
+
+  <div
+    class="d-flex justify-content-center align-items-center mt-4"
+    *ngIf="!loading && totalPages > 1"
+  >
+    <button
+      class="btn btn-sm btn-outline-secondary me-2"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
+      ← Précédent
+    </button>
+    <span class="fw-semibold text-dark">
+      Page {{ currentPage }} sur {{ totalPages }}
+    </span>
+    <button
+      class="btn btn-sm btn-outline-secondary ms-2"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
+      Suivant →
+    </button>
+  </div>
+</div>

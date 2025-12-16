@@ -1,0 +1,24 @@
+<div class="chat-layout">
+  <div class="chat-sidebar">
+    <app-chat-start
+      (startConversation)="openConversation($event)"
+    ></app-chat-start>
+  </div>
+
+  <div class="chat-inbox">
+    <app-chat-inbox
+      (conversationSelected)="openConversation($event)"
+    ></app-chat-inbox>
+  </div>
+
+  <div
+    class="chat-messages"
+    *ngIf="selectedConversationId && selectedReceiverId"
+  >
+    <app-chat-box
+      [conversationId]="selectedConversationId"
+      [receiverId]="selectedReceiverId"
+    >
+    </app-chat-box>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: #0b2354;
+  color: #ffffff;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
+
+.sidebar-header {
+  padding: 32px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  filter: none;
+  transition: opacity 0.3s ease;
+}
+
+.mat-nav-list {
+  padding: 12px 0;
+}
+.mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mat-nav-list a.mat-list-item {
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 20px;
+  margin: 8px 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  height: 42px;
+}
+
+.mat-nav-list a.mat-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+.mat-nav-list a.active {
+  background-color: #5da5b3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+mat-icon {
+  font-size: 22px;
+  color: #ffffff !important;
+  margin-right: 16px;
+  transition: color 0.3s ease;
+}
+
+.sidebar.collapsed mat-icon {
+  margin: 0 auto;
+}
+
+.link-text {
+  white-space: nowrap;
+  color: white !important;
+  opacity: 1 !important;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.sidebar.collapsed .link-text {
+  display: none;
+}
+
+.mat-list-item .mat-line,
+a.mat-list-item span,
+a.mat-list-item {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.mat-list-item-content {
+  display: flex;
+  align-items: center !important;
+  gap: 12px;
+}
+
+.mat-nav-list a.mat-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.link-text {
+  line-height: 1;
+  padding-top: 2px;
+}

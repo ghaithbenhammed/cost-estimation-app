@@ -1,0 +1,19 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar Component -->
+  <mat-sidenav *ngIf="showSidebar" #sidenav mode="side" [opened]="!sidebarCollapsed">
+    <app-sidebar [collapsed]="sidebarCollapsed"></app-sidebar>
+  </mat-sidenav>
+  
+
+  <!-- Zone de contenu principal -->
+  <mat-sidenav-content>
+    <!-- Header Component -->
+    <app-header *ngIf="showHeader" (sidebarToggle)="toggleSidebar()"></app-header>
+<!-- Affiche le header seulement si l'utilisateur est connecté -->
+
+    <!-- Contenu principal rendu par router-outlet -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

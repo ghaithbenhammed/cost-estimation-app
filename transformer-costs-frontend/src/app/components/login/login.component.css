@@ -1,0 +1,135 @@
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e4e7ed;
+}
+
+.login-box {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.login-icon img {
+  width: 48px;
+  height: 48px;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.login-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #444;
+}
+
+.login-box input[type="email"],
+.login-box input[type="password"],
+.login-box input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #b0c0d4;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.login-box input:focus {
+  border-color: #5da5b3;
+  outline: none;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: #5da5b3;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+  background-color: #4c94a2;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #fdecea;
+  border: 1px solid #f5c2c7;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.success-message {
+  color: #2e7d32;
+  background-color: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+button[disabled] {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+button {
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+input.invalid {
+  border: 1px solid #e53935;
+  background-color: #fffafa;
+}
+
+.field-error {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
